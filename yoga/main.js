@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function(){
       tabcontent[i].classList.remove('show');
       tabcontent[i].classList.add('hide');
     }
-  }
+  };
   
   hideContent(1);
 
@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', function(){
         tabcontent[b].classList.add('show');
        
       }
-  }
+  };
 
   info.addEventListener('click',(event) => {
     let target = event.target;
@@ -33,6 +33,43 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-  })
+  });
 
-})
+  const deadline = '2021-07-30';
+    
+
+  const getTimeRemaining = (deadline) => {
+    const t = Date.parse(deadline) - Date.parse(new Date()),
+          seconds = Math.floor((t/1000) % 60),
+          minutes = Math.floor((t/1000/60) % 60),
+          hours = Math.floor((t/1000/60/60));
+    return {
+      'total' : t,
+      seconds,
+      minutes,
+      hours
+    } ;
+  }
+
+  function setClock(id, deadline){
+    const timerContainer = document.querySelector(id),
+          hours = timerContainer.querySelector('.hours'),
+          minutes = timerContainer.querySelector('.minutes'),
+          seconds = timerContainer.querySelector('.seconds');
+    
+    function updateClock(){
+      const t = getTimeRemaining(deadline);
+      hours.textContent = t.hours;
+      minutes.textContent = t.minutes;
+      seconds.textContent = t.seconds;
+    }
+    setInterval(updateClock, 1000);
+
+    if(t.total <= 0) {
+      clearInterval(updateClock);
+    }
+  }
+
+  setClock('#timer', deadline);
+
+});
