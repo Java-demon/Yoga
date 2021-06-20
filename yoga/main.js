@@ -59,6 +59,9 @@ window.addEventListener('DOMContentLoaded', function(){
     
     function updateClock(){
       const t = getTimeRemaining(deadline);
+      if(t.total <= 0) {
+        clearInterval(updateClock);
+      }
       
       hours.textContent = t.hours > 9 ? t.hours : `0${t.hours}`;
       minutes.textContent = t.minutes > 9 ? t.minutes : `0${t.minutes}`;
@@ -66,11 +69,25 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     setInterval(updateClock, 1000);
 
-    if(t.total <= 0) {
-      clearInterval(updateClock);
-    }
+   
   }
 
   setClock('#timer', deadline);
 
+  const more = document.querySelector('.more'),
+        overlay = document.querySelector('.overlay'),
+        close = document.querySelector('.popup-close');
+
+  more.addEventListener('click', function(){
+    overlay.style.display = 'block';
+    this.classList.add('more-splash');
+    document.body.style.overflow = 'hidden';
+  });  
+  
+  close.addEventListener('click', function(){
+    overlay.style.display = 'none';
+    more.classList.remove('more-splash');
+    document.body.style.overflow = '';
+  });  
+  
 });
