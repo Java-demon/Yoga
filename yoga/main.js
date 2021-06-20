@@ -59,9 +59,10 @@ window.addEventListener('DOMContentLoaded', function(){
     
     function updateClock(){
       const t = getTimeRemaining(deadline);
-      hours.textContent = t.hours;
-      minutes.textContent = t.minutes;
-      seconds.textContent = t.seconds;
+      
+      hours.textContent = t.hours > 9 ? t.hours : `0${t.hours}`;
+      minutes.textContent = t.minutes > 9 ? t.minutes : `0${t.minutes}`;
+      seconds.textContent = t.seconds > 9 ? t.seconds : `0${t.seconds}`;
     }
     setInterval(updateClock, 1000);
 
